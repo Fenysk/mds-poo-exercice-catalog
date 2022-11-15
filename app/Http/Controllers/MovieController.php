@@ -19,7 +19,7 @@ class MovieController extends Controller
         $order = $request->input('order', 'asc');
 
         $query = Movie::query();
-        if (($orderBy == "startYear" || $orderBy == "primaryTitle" || $orderBy == "averageRating") && ($order == "asc" || $order == "desc")) {
+        if ($orderBy == "startYear" || $orderBy == "primaryTitle" || $orderBy == "averageRating") {
             $query->orderBy($orderBy, $order);
         }
 
@@ -31,5 +31,11 @@ class MovieController extends Controller
             'orderBy' => $orderBy,
             'order' => $order
         ]);
+    }
+
+    public function random() {
+        $movie = Movie::inRandomOrder()->first();
+
+        return view('movie.show', ['movie' => $movie]);
     }
 }
