@@ -71,14 +71,14 @@
 
     </style>
 
-    <div class="pagination">
+    <div class="page">
+        <div class="pagination">
             @if ($page != 0)
                 <a href="{{$movies->appends(['order_by' => 'startYear'])->previousPageUrl()}}">< Page précédente</a>
             @endif
             <a href="{{$movies->appends(request()->query())->nextPageUrl()}}">Page suivante ></a>
         </div>
 
-    <div class="page">
         <div class="list">
             @foreach ($movies as $movie)
                 <a class="movie" href="/movie/{{ $movie->id }}">
@@ -87,10 +87,12 @@
                         <p class="title">{{$movie->primaryTitle}}</p>
                         <p class="date">{{$movie->startYear}}</p>
                         <p class="note">Note : {{ $movie->averageRating }}/10</p>
+                        <p class="genre">Genre : {{ $movie->genre }}</p>
                     </div>
                 </a>
             @endforeach
         </div>
+
         <div class="pagination">
             @if ($page != 0)
                 <a href="{{$movies->appends(['order_by' => 'startYear'])->previousPageUrl()}}">< Page précédente</a>

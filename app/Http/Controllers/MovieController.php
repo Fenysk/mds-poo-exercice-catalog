@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use App\Models\Genre;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -14,22 +16,31 @@ class MovieController extends Controller
     }
 
     public function list(Request $request) {
-        $page = $request->input('page');
-        $orderBy = $request->input('order_by');
-        $order = $request->input('order', 'asc');
+        $page = $request->query('page');
+        $orderBy = $request->query('order_by');
+        $order = $request->query('order', 'asc');
+        $genre = $request->query('genre');
 
-        $query = Movie::query();
+        $query_movie = Movie::query();
+    
         if ($orderBy == "startYear" || $orderBy == "primaryTitle" || $orderBy == "averageRating") {
-            $query->orderBy($orderBy, $order);
+            $query_movie->orderBy($orderBy, $order);
         }
-
-        $movies = $query->paginate(50);
+        
+        if ($genre) {
+            $query_movie->whereHas('genres', function(Builder $query) use ($genre) {    
+                $query->where('label', $genre);
+            });
+        }
+        
+        $movies = $query_movie->paginate(20);
 
         return view('movie.list', [
             'movies' => $movies,
             'page' => $page,
             'orderBy' => $orderBy,
-            'order' => $order
+            'order' => $order,
+            'genre' => $genre
         ]);
     }
 
@@ -38,4 +49,5 @@ class MovieController extends Controller
 
         return view('movie.show', ['movie' => $movie]);
     }
+    
 }
