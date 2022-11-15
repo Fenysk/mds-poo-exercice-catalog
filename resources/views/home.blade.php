@@ -10,17 +10,48 @@
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
+    <!-- Styles -->    
     <style>
+
+        body {
+            background-color: rgb(200,200,210) !important;
+            font-family: Arial;
+        }
+
         .container {
-            margin: auto;
-            max-width: 900px;
+            margin: 5%;
         }
 
         .wrapper {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 24px;
         }
+
+        div {
+            background-color: gray;
+            padding: 16px;
+            border-radius: 32px;
+            display: flex;
+            flex-flow: column;
+            justify-content: space-between;
+        }
+
+        img {
+            border-radius: 16px;
+        }
+
+        div p {
+            color: white;
+            font-weight: bold;
+            font-family: Arial;
+            text-align: center
+        }
+
+        h1 {
+            color: white;
+        }
+
     </style>
 </head>
 <body>
@@ -30,7 +61,7 @@
         <div class="wrapper">
             @foreach ($movies as $movie)
             <div>
-                <a href="/movies/{{ $movie->id }}">
+                <a href="/movie/{{ $movie->id }}">
                     <img src="{{ $movie->poster }}" alt="{{ $movie->primaryTitle }}">
                 </a>
             </div>
